@@ -1,0 +1,6 @@
+{
+  "name": "Simulação de Quishing - Segurança da Informação",
+  "description": "Aplicação web educativa em arquivo único HTML para campanha corporativa de conscientização contra golpes de QR Code (Quishing).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

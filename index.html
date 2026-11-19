@@ -1,1 +1,1071 @@
-# WiF1-HBA
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acesso Exclusivo Colaboradores H3A</title>
+    <meta
+      name="description"
+      content="Portal corporativo de validação de cadastro para acesso ao conteúdo exclusivo do evento."
+    />
+    <meta property="og:title" content="Acesso Exclusivo Colaboradores H3A" />
+    <meta
+      property="og:description"
+      content="Confirme seus dados corporativos para liberar o acesso ao conteúdo exclusivo do evento."
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- Google Fonts: Plus Jakarta Sans (Display) + DM Sans (Body) + IBM Plex Mono (Dados) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+              mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+            },
+            colors: {
+              navy: {
+                950: '#07172E',
+                900: '#0B213F',
+                800: '#12315B',
+                700: '#1B447A',
+              },
+              azure: {
+                50: '#F0F9FF',
+                100: '#E0F2FE',
+                500: '#0EA5E9',
+                600: '#0284C7',
+                700: '#0369A1',
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      :root {
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      body {
+        font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+        background-color: #f8fafc;
+        color: #0f172a;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      h1,
+      h2,
+      h3,
+      .font-display {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        text-wrap: balance;
+      }
+
+      .tabular-nums {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Transições suaves entre telas (somente transform e opacity) */
+      .screen-panel {
+        transition:
+          opacity 320ms var(--ease-out-expo),
+          transform 320ms var(--ease-out-expo);
+      }
+
+      .screen-hidden {
+        display: none !important;
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      .screen-entering {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      .screen-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Animação do modal */
+      .modal-backdrop {
+        transition: opacity 200ms var(--ease-out-expo);
+      }
+      .modal-dialog {
+        transition:
+          opacity 220ms var(--ease-out-expo),
+          transform 220ms var(--ease-out-expo);
+      }
+
+      /* Foco visível acessível */
+      :focus-visible {
+        outline: 2px solid #0284c7;
+        outline-offset: 2px;
+      }
+
+      /* Respeito a prefers-reduced-motion */
+      @media (prefers-reduced-motion: reduce) {
+        .screen-panel,
+        .modal-backdrop,
+        .modal-dialog,
+        * {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-azure-100 selection:text-navy-900">
+    <!-- =================================================================== -->
+    <!-- TELA 1: CAPTURA (PÁGINA INICIAL - CADASTRO)                         -->
+    <!-- =================================================================== -->
+    <div id="screen-capture" class="screen-panel screen-visible flex-1 flex flex-col">
+      <!-- Conteúdo Principal da Tela 1 -->
+      <main class="flex-1 flex items-start justify-center px-4 pt-3 pb-6 sm:pt-5 sm:pb-8">
+        <section
+          aria-labelledby="capture-title"
+          class="w-full max-w-md bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm"
+        >
+          <div class="space-y-2.5">
+            <h1
+              id="capture-title"
+              class="font-display text-2xl font-bold tracking-tight leading-snug text-navy-900"
+            >
+              Acesso Exclusivo Colaboradores
+              <span class="inline-flex items-baseline" aria-label="H3A"><span>H</span><span class="-ml-[0.15em]">3</span><span class="-ml-[0.04em]">A</span></span>
+            </h1>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Preencha seus dados abaixo para confirmar sua participação e liberar o acesso ao conteúdo exclusivo do evento.
+            </p>
+          </div>
+
+          <hr class="my-6 border-slate-100" />
+
+          <form id="capture-form" novalidate class="space-y-5">
+            <!-- Campo: Registro -->
+            <div>
+              <label for="input-registro" class="block text-sm font-medium text-slate-800 mb-1.5">
+                Registro <span class="text-azure-700" aria-hidden="true">*</span>
+              </label>
+              <input
+                id="input-registro"
+                name="registro"
+                type="text"
+                required
+                autocomplete="off"
+                placeholder="Informe seu número de registro"
+                class="w-full min-h-[46px] px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-base transition-colors duration-150 focus:border-azure-600 focus:ring-2 focus:ring-azure-600/20 focus:outline-none"
+              />
+              <p id="error-registro" class="hidden mt-1.5 text-xs font-medium text-red-700 flex items-center gap-1.5" role="alert">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>Informe seu registro para continuar.</span>
+              </p>
+            </div>
+
+            <!-- Campo: Email -->
+            <div>
+              <label for="input-email" class="block text-sm font-medium text-slate-800 mb-1.5">
+                Email <span class="text-azure-700" aria-hidden="true">*</span>
+              </label>
+              <input
+                id="input-email"
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                inputmode="email"
+                placeholder="seu.email@empresa.com.br"
+                class="w-full min-h-[46px] px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-base transition-colors duration-150 focus:border-azure-600 focus:ring-2 focus:ring-azure-600/20 focus:outline-none"
+              />
+              <p id="error-email" class="hidden mt-1.5 text-xs font-medium text-red-700 flex items-center gap-1.5" role="alert">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span id="error-email-text">Digite um email válido.</span>
+              </p>
+            </div>
+
+            <!-- Campo: Fábrica -->
+            <div>
+              <label for="input-fabrica" class="block text-sm font-medium text-slate-800 mb-1.5">
+                Fábrica <span class="text-azure-700" aria-hidden="true">*</span>
+              </label>
+              <div class="relative">
+                <select
+                  id="input-fabrica"
+                  name="fabrica"
+                  required
+                  class="w-full min-h-[46px] pl-3.5 pr-10 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-base appearance-none transition-colors duration-150 focus:border-azure-600 focus:ring-2 focus:ring-azure-600/20 focus:outline-none cursor-pointer"
+                >
+                  <option value="" selected disabled>Selecione sua fábrica</option>
+                  <option value="Fabrica1">Fabrica1</option>
+                  <option value="Fabrica2">Fabrica2</option>
+                  <option value="Fabrica4">Fabrica4</option>
+                  <option value="Fabrica5">Fabrica5</option>
+                  <option value="Fabrica6">Fabrica6</option>
+                </select>
+                <svg
+                  class="w-4 h-4 text-slate-500 pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <p id="error-fabrica" class="hidden mt-1.5 text-xs font-medium text-red-700 flex items-center gap-1.5" role="alert">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>Selecione uma fábrica para continuar.</span>
+              </p>
+            </div>
+
+            <!-- Botão de Ação -->
+            <div class="pt-1">
+              <button
+                type="submit"
+                class="w-full min-h-[48px] px-6 py-3 rounded-xl bg-navy-900 hover:bg-navy-800 active:scale-[0.99] text-white font-display font-semibold text-sm sm:text-base transition-all duration-150 flex items-center justify-center gap-2 whitespace-nowrap shadow-sm cursor-pointer"
+              >
+                <span>Validar Acesso</span>
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </section>
+      </main>
+
+      <!-- Rodapé Discreto da Tela 1 com Acesso Administrativo -->
+      <footer class="py-3 px-4 flex justify-center">
+        <button
+          id="btn-open-admin"
+          type="button"
+          class="min-h-[44px] px-3 inline-flex items-center justify-center text-xs text-slate-400 hover:text-slate-600 transition-colors underline-offset-2 hover:underline cursor-pointer whitespace-nowrap"
+        >
+          Área do Organizador
+        </button>
+      </footer>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- TELA 2: REVELAÇÃO E CONSCIENTIZAÇÃO (EDUCAÇÃO)                      -->
+    <!-- =================================================================== -->
+    <div id="screen-reveal" class="screen-panel screen-hidden hidden flex-1 flex flex-col">
+      <!-- Faixa de Alerta Empática no Topo (Âmbar/Alerta para transição educativa) -->
+      <section class="bg-gradient-to-b from-amber-100/80 via-amber-50 to-slate-50 border-b border-amber-200/80">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-7 sm:pt-6 sm:pb-10">
+          <!-- Selo no topo -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-100 border border-amber-300 text-amber-950 text-xs font-display font-bold tracking-wide">
+            <svg class="w-4 h-4 text-amber-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>SIMULAÇÃO DE SEGURANÇA DA INFORMAÇÃO</span>
+          </div>
+
+          <h1 class="mt-4 font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+            Opa! Você poderia ter caído em um golpe de QR Code (Quishing)!
+          </h1>
+
+          <!-- Convite da Semana de Segurança da Informação HBA -->
+          <div class="mt-4 bg-amber-100/60 border border-amber-300/70 rounded-xl px-4 py-3.5 max-w-3xl">
+            <p class="text-sm sm:text-base font-medium text-navy-900 leading-relaxed">
+              Iniciamos nessa segunda-feira (24/11) a semana de Segurança da Informação HBA, esse e mais conteúdos sobre o tema estaremos apresentando nas palestras e dinamicas, venham participar e se informarem.
+            </p>
+          </div>
+
+          <p class="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed max-w-3xl">
+            Calma, seus dados estão seguros! Esta página faz parte da nossa Campanha de Conscientização em Segurança da Informação. No mundo real, cibercriminosos usam QR Codes falsos colados sobre cartazes legítimos ou enviados por e-mail para roubar suas credenciais.
+          </p>
+
+          <!-- Confirmação discreta de segurança local -->
+          <div class="mt-5 flex items-start sm:items-center gap-2.5 text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 max-w-2xl">
+            <svg class="w-5 h-5 text-emerald-700 shrink-0 mt-0.5 sm:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+            <span>
+              Nenhuma informação digitada foi enviada para servidores externos. Tudo permaneceu apenas localmente neste navegador.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção Educativa: Azul / Verde Seguro -->
+      <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-7 sm:py-10 space-y-8">
+        <section aria-labelledby="protect-heading">
+          <div class="mb-5">
+            <p class="text-xs font-medium text-azure-700">Guia Prático de Prevenção</p>
+            <h2 id="protect-heading" class="mt-1 font-display text-xl sm:text-2xl font-bold text-navy-900">
+              Como se proteger de QR Codes falsos
+            </h2>
+          </div>
+
+          <!-- Grid de 4 Cards Educativos -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+            <!-- Card 1 -->
+            <article class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 flex flex-col gap-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-azure-50 border border-azure-100 text-azure-700 flex items-center justify-center shrink-0" aria-hidden="true">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </div>
+                <h3 class="font-display text-base font-semibold text-navy-900">
+                  1. Verifique o ambiente físico
+                </h3>
+              </div>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Desconfie de adesivos colados por cima de QR Codes originais em cardápios, totens ou cartazes.
+              </p>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 flex flex-col gap-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-azure-50 border border-azure-100 text-azure-700 flex items-center justify-center shrink-0" aria-hidden="true">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  </svg>
+                </div>
+                <h3 class="font-display text-base font-semibold text-navy-900">
+                  2. Confira o link antes de abrir
+                </h3>
+              </div>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Ao apontar a câmera, leia o endereço (URL) que aparece na tela antes de clicar. Verifique se o domínio é oficial.
+              </p>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 flex flex-col gap-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 flex items-center justify-center shrink-0" aria-hidden="true">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+                <h3 class="font-display text-base font-semibold text-navy-900">
+                  3. Cuidado com pedidos de dados
+                </h3>
+              </div>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Desconfie se um QR Code pedir login, senha, dados bancários ou informações pessoais sem motivo claro.
+              </p>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 flex flex-col gap-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 flex items-center justify-center shrink-0" aria-hidden="true">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </div>
+                <h3 class="font-display text-base font-semibold text-navy-900">
+                  4. Na dúvida, não escaneie
+                </h3>
+              </div>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Prefira digitar o endereço oficial diretamente no navegador ou consultar a equipe de TI/Segurança.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Informações adicionais sobre Segurança da Informação -->
+        <section aria-label="Materiais adicionais de Segurança da Informação">
+          <div class="bg-azure-50/70 border border-azure-200/80 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            <div class="flex items-start sm:items-center gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-white border border-azure-200 text-azure-700 flex items-center justify-center shrink-0" aria-hidden="true">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path>
+                </svg>
+              </div>
+              <p class="text-sm sm:text-base font-medium text-navy-900">
+                Para mais informações sobre Segurança da Informação acesse:
+              </p>
+            </div>
+            <a
+              href="https://drive.google.com/drive/folders/1iix5PEFczRbdEvMiwtZ_ydbtji4t0pR6?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="min-h-[48px] px-5 py-3 rounded-xl bg-azure-600 hover:bg-azure-700 active:scale-[0.99] text-white font-display font-semibold text-sm sm:text-base transition-all duration-150 inline-flex items-center justify-center gap-2 whitespace-nowrap shrink-0 shadow-sm"
+            >
+              <span>Acessar Materiais</span>
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          </div>
+        </section>
+
+        <!-- Área do Botão Final e Mensagem de Agradecimento -->
+        <section class="pt-1 pb-6">
+          <div id="ack-action-wrapper" class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-5 sm:p-6">
+            <div>
+              <h3 class="font-display text-base font-semibold text-navy-900">
+                Conclua sua participação na campanha
+              </h3>
+              <p class="text-sm text-slate-600 mt-0.5">
+                A atenção aos detalhes é nossa melhor defesa contra engenharia social.
+              </p>
+            </div>
+            <button
+              id="btn-acknowledge"
+              type="button"
+              class="min-h-[48px] px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-display font-semibold text-sm sm:text-base transition-all duration-150 inline-flex items-center justify-center gap-2 whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            >
+              <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Entendi, estou mais atento agora!</span>
+            </button>
+          </div>
+
+          <!-- Mensagem de Agradecimento após clicar no botão final -->
+          <div
+            id="ack-success-message"
+            class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-6 sm:p-7 text-emerald-950"
+            role="status"
+            aria-live="polite"
+          >
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div class="flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5" aria-hidden="true">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-bold text-emerald-950">
+                    Obrigado por participar da nossa campanha!
+                  </h3>
+                  <p class="text-sm text-emerald-900/90 mt-1 leading-relaxed">
+                    Excelente atitude. Compartilhe esse cuidado com seus colegas de equipe e ajude a manter nossa empresa protegida contra golpes digitais.
+                  </p>
+                </div>
+              </div>
+              <button
+                id="btn-back-to-start"
+                type="button"
+                class="min-h-[44px] px-4 py-2 rounded-xl border border-emerald-300 bg-white hover:bg-emerald-100/60 text-emerald-900 text-sm font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Voltar ao início
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- MODAL ADMINISTRATIVO: ÁREA DO ORGANIZADOR                           -->
+    <!-- =================================================================== -->
+    <div
+      id="admin-modal"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="admin-modal-title"
+    >
+      <!-- Backdrop -->
+      <div id="admin-modal-backdrop" class="modal-backdrop fixed inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
+
+      <!-- Conteúdo do Modal -->
+      <div class="modal-dialog relative z-10 w-full max-w-xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl border border-slate-200 shadow-xl">
+        <!-- Cabeçalho do Modal -->
+        <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between gap-4">
+          <div>
+            <h2 id="admin-modal-title" class="font-display text-lg font-semibold text-navy-900">
+              Área do Organizador
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Gerenciamento local dos registros da simulação
+            </p>
+          </div>
+          <button
+            id="btn-close-admin"
+            type="button"
+            aria-label="Fechar janela"
+            class="min-w-[44px] min-h-[44px] -mr-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Passo 1: Autenticação por Senha -->
+        <div id="admin-auth-step" class="p-6 space-y-4">
+          <p class="text-sm text-slate-600">
+            Informe a senha do organizador para visualizar a contagem de participantes, exportar o relatório em CSV ou limpar os dados locais.
+          </p>
+
+          <form id="admin-login-form" class="space-y-4" novalidate>
+            <div>
+              <label for="admin-password" class="block text-sm font-medium text-slate-800 mb-1.5">
+                Senha de acesso
+              </label>
+              <input
+                id="admin-password"
+                type="password"
+                autocomplete="off"
+                placeholder="Digite a senha do organizador"
+                class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-900 placeholder:text-slate-400 text-sm focus:border-azure-600 focus:ring-2 focus:ring-azure-600/20 focus:outline-none"
+              />
+              <p id="admin-auth-error" class="hidden mt-1.5 text-xs font-medium text-red-700 flex items-center gap-1.5" role="alert">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="15" y1="9" x2="9" y2="15"></line>
+                  <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+                <span>Senha incorreta. Tente novamente.</span>
+              </p>
+            </div>
+
+            <div class="flex items-center justify-end gap-2 pt-1">
+              <button
+                id="btn-cancel-auth"
+                type="button"
+                class="min-h-[44px] px-4 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-sm font-medium transition-colors cursor-pointer whitespace-nowrap"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                class="min-h-[44px] px-5 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap"
+              >
+                Entrar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Passo 2: Painel de Exportação e Limpeza -->
+        <div id="admin-panel-step" class="hidden p-6 space-y-5">
+          <!-- Resumo Numérico -->
+          <div class="flex items-center justify-between gap-4 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5">
+            <div>
+              <span class="text-xs font-medium text-slate-500 block">Registros salvos neste navegador</span>
+              <span id="admin-records-count" class="font-mono tabular-nums text-2xl font-semibold text-navy-900">0</span>
+            </div>
+            <span class="text-xs text-slate-500 font-mono">localStorage</span>
+          </div>
+
+          <!-- Lista prévia dos registros -->
+          <div class="border border-slate-200 rounded-xl overflow-hidden">
+            <div class="max-h-52 overflow-y-auto">
+              <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 sticky top-0">
+                  <tr>
+                    <th class="py-2.5 px-3 font-medium">Registro</th>
+                    <th class="py-2.5 px-3 font-medium">Email</th>
+                    <th class="py-2.5 px-3 font-medium">Fábrica</th>
+                    <th class="py-2.5 px-3 font-medium whitespace-nowrap">Data/Hora</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-records-tbody" class="divide-y divide-slate-100 text-slate-800">
+                  <!-- Preenchido via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+            <div id="admin-empty-state" class="hidden py-8 px-4 text-center text-sm text-slate-500">
+              Nenhum registro capturado ainda neste navegador.
+            </div>
+          </div>
+
+          <!-- Feedback de ações no painel -->
+          <div id="admin-feedback" class="hidden text-xs font-medium rounded-lg px-3.5 py-2.5" role="status"></div>
+
+          <!-- Confirmação inline para limpar registros -->
+          <div id="admin-clear-confirm" class="hidden bg-red-50 border border-red-200 rounded-xl p-4 space-y-3">
+            <p class="text-xs sm:text-sm font-medium text-red-900">
+              Tem certeza que deseja apagar todos os registros salvos? Esta ação não pode ser desfeita.
+            </p>
+            <div class="flex items-center justify-end gap-2">
+              <button
+                id="btn-cancel-clear"
+                type="button"
+                class="min-h-[40px] px-3.5 py-1.5 rounded-lg border border-red-200 bg-white text-slate-700 hover:bg-slate-50 text-xs font-medium cursor-pointer whitespace-nowrap"
+              >
+                Cancelar
+              </button>
+              <button
+                id="btn-confirm-clear"
+                type="button"
+                class="min-h-[40px] px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold cursor-pointer whitespace-nowrap"
+              >
+                Sim, limpar tudo
+              </button>
+            </div>
+          </div>
+
+          <!-- Botões de Ação do Organizador -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+            <button
+              id="btn-request-clear"
+              type="button"
+              class="min-h-[44px] px-4 py-2 rounded-xl border border-red-200 text-red-700 hover:bg-red-50 text-sm font-medium transition-colors cursor-pointer whitespace-nowrap inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Limpar registros</span>
+            </button>
+
+            <button
+              id="btn-download-csv"
+              type="button"
+              class="min-h-[44px] px-5 py-2 rounded-xl bg-azure-600 hover:bg-azure-700 text-white text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Baixar CSV</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- LÓGICA DA APLICAÇÃO (SPA, VALIDAÇÃO, LOCALSTORAGE E EXPORTAÇÃO CSV) -->
+    <!-- =================================================================== -->
+    <script>
+      (function () {
+        'use strict';
+
+        var STORAGE_KEY = 'campanha_quishing_registros';
+        var ADMIN_PASSWORD = '#Muc!0hba%A8h';
+
+        // Elementos das Telas
+        var screenCapture = document.getElementById('screen-capture');
+        var screenReveal = document.getElementById('screen-reveal');
+
+        // Elementos do Formulário de Captura
+        var captureForm = document.getElementById('capture-form');
+        var inputRegistro = document.getElementById('input-registro');
+        var inputEmail = document.getElementById('input-email');
+        var inputFabrica = document.getElementById('input-fabrica');
+        var errorRegistro = document.getElementById('error-registro');
+        var errorEmail = document.getElementById('error-email');
+        var errorEmailText = document.getElementById('error-email-text');
+        var errorFabrica = document.getElementById('error-fabrica');
+
+        // Elementos da Tela 2
+        var btnAcknowledge = document.getElementById('btn-acknowledge');
+        var ackActionWrapper = document.getElementById('ack-action-wrapper');
+        var ackSuccessMessage = document.getElementById('ack-success-message');
+        var btnBackToStart = document.getElementById('btn-back-to-start');
+
+        // Elementos do Modal Administrativo
+        var adminModal = document.getElementById('admin-modal');
+        var adminBackdrop = document.getElementById('admin-modal-backdrop');
+        var btnOpenAdmin = document.getElementById('btn-open-admin');
+        var btnCloseAdmin = document.getElementById('btn-close-admin');
+        var btnCancelAuth = document.getElementById('btn-cancel-auth');
+        var adminAuthStep = document.getElementById('admin-auth-step');
+        var adminPanelStep = document.getElementById('admin-panel-step');
+        var adminLoginForm = document.getElementById('admin-login-form');
+        var adminPasswordInput = document.getElementById('admin-password');
+        var adminAuthError = document.getElementById('admin-auth-error');
+        var adminRecordsCount = document.getElementById('admin-records-count');
+        var adminRecordsTbody = document.getElementById('admin-records-tbody');
+        var adminEmptyState = document.getElementById('admin-empty-state');
+        var adminFeedback = document.getElementById('admin-feedback');
+        var adminClearConfirm = document.getElementById('admin-clear-confirm');
+        var btnRequestClear = document.getElementById('btn-request-clear');
+        var btnCancelClear = document.getElementById('btn-cancel-clear');
+        var btnConfirmClear = document.getElementById('btn-confirm-clear');
+        var btnDownloadCsv = document.getElementById('btn-download-csv');
+
+        // Leitura segura do localStorage
+        function getRegistros() {
+          try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return [];
+            var parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed : [];
+          } catch (err) {
+            return [];
+          }
+        }
+
+        function saveRegistros(lista) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
+            return true;
+          } catch (err) {
+            return false;
+          }
+        }
+
+        function formatDateTime(date) {
+          var pad = function (n) {
+            return String(n).padStart(2, '0');
+          };
+          return (
+            pad(date.getDate()) +
+            '/' +
+            pad(date.getMonth() + 1) +
+            '/' +
+            date.getFullYear() +
+            ' ' +
+            pad(date.getHours()) +
+            ':' +
+            pad(date.getMinutes()) +
+            ':' +
+            pad(date.getSeconds())
+          );
+        }
+
+        // Validação de email (formato padrão simplificado)
+        function isValidEmail(email) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+        }
+
+        function setFieldError(inputEl, errorEl, hasError) {
+          if (hasError) {
+            inputEl.classList.remove('border-slate-300');
+            inputEl.classList.add('border-red-500');
+            inputEl.setAttribute('aria-invalid', 'true');
+            errorEl.classList.remove('hidden');
+          } else {
+            inputEl.classList.remove('border-red-500');
+            inputEl.classList.add('border-slate-300');
+            inputEl.removeAttribute('aria-invalid');
+            errorEl.classList.add('hidden');
+          }
+        }
+
+        // Limpar erro enquanto usuário digita ou seleciona
+        inputRegistro.addEventListener('input', function () {
+          if (inputRegistro.value.trim().length > 0) {
+            setFieldError(inputRegistro, errorRegistro, false);
+          }
+        });
+
+        inputEmail.addEventListener('input', function () {
+          if (isValidEmail(inputEmail.value.trim())) {
+            setFieldError(inputEmail, errorEmail, false);
+          }
+        });
+
+        inputFabrica.addEventListener('change', function () {
+          if (inputFabrica.value) {
+            setFieldError(inputFabrica, errorFabrica, false);
+          }
+        });
+
+        // Transição suave entre telas
+        function showScreen(target) {
+          var outgoing = target === 'reveal' ? screenCapture : screenReveal;
+          var incoming = target === 'reveal' ? screenReveal : screenCapture;
+
+          outgoing.style.opacity = '0';
+          outgoing.style.transform = 'translateY(-8px)';
+
+          setTimeout(function () {
+            outgoing.classList.remove('screen-visible');
+            outgoing.classList.add('screen-hidden', 'hidden');
+            outgoing.style.opacity = '';
+            outgoing.style.transform = '';
+
+            incoming.classList.remove('screen-hidden', 'hidden');
+            incoming.classList.add('screen-entering');
+
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                incoming.classList.remove('screen-entering');
+                incoming.classList.add('screen-visible');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              });
+            });
+          }, 180);
+        }
+
+        // Submissão do formulário da Tela 1
+        captureForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          var registro = inputRegistro.value.trim();
+          var email = inputEmail.value.trim();
+          var fabrica = inputFabrica.value;
+          var valid = true;
+
+          if (!registro) {
+            setFieldError(inputRegistro, errorRegistro, true);
+            valid = false;
+          } else {
+            setFieldError(inputRegistro, errorRegistro, false);
+          }
+
+          if (!email) {
+            errorEmailText.textContent = 'Informe seu email para continuar.';
+            setFieldError(inputEmail, errorEmail, true);
+            valid = false;
+          } else if (!isValidEmail(email)) {
+            errorEmailText.textContent = 'Formato de email inválido. Verifique o endereço digitado.';
+            setFieldError(inputEmail, errorEmail, true);
+            valid = false;
+          } else {
+            setFieldError(inputEmail, errorEmail, false);
+          }
+
+          if (!fabrica) {
+            setFieldError(inputFabrica, errorFabrica, true);
+            valid = false;
+          } else {
+            setFieldError(inputFabrica, errorFabrica, false);
+          }
+
+          if (!valid) {
+            if (!registro) {
+              inputRegistro.focus();
+            } else if (!email || !isValidEmail(email)) {
+              inputEmail.focus();
+            } else {
+              inputFabrica.focus();
+            }
+            return;
+          }
+
+          // Salvar no localStorage sem enviar a servidor externo
+          var registros = getRegistros();
+          registros.push({
+            registro: registro,
+            email: email,
+            fabrica: fabrica,
+            dataHora: formatDateTime(new Date()),
+          });
+          saveRegistros(registros);
+
+          // Exibir Tela 2 imediatamente com transição suave
+          showScreen('reveal');
+        });
+
+        // Botão final da Tela 2
+        btnAcknowledge.addEventListener('click', function () {
+          ackActionWrapper.classList.add('hidden');
+          ackSuccessMessage.classList.remove('hidden');
+        });
+
+        // Botão para voltar ao início
+        btnBackToStart.addEventListener('click', function () {
+          captureForm.reset();
+          setFieldError(inputRegistro, errorRegistro, false);
+          setFieldError(inputEmail, errorEmail, false);
+          setFieldError(inputFabrica, errorFabrica, false);
+          ackSuccessMessage.classList.add('hidden');
+          ackActionWrapper.classList.remove('hidden');
+          showScreen('capture');
+        });
+
+        // =================================================================
+        // ÁREA DO ORGANIZADOR (MODAL + SENHA + EXPORTAÇÃO CSV + LIMPEZA)
+        // =================================================================
+        function openAdminModal() {
+          adminAuthStep.classList.remove('hidden');
+          adminPanelStep.classList.add('hidden');
+          adminAuthError.classList.add('hidden');
+          adminFeedback.classList.add('hidden');
+          adminClearConfirm.classList.add('hidden');
+          adminPasswordInput.value = '';
+          adminModal.classList.remove('hidden');
+          setTimeout(function () {
+            adminPasswordInput.focus();
+          }, 50);
+        }
+
+        function closeAdminModal() {
+          adminModal.classList.add('hidden');
+          adminPasswordInput.value = '';
+          adminClearConfirm.classList.add('hidden');
+        }
+
+        function escapeHtml(text) {
+          var div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
+        }
+
+        function renderAdminTable() {
+          var registros = getRegistros();
+          adminRecordsCount.textContent = String(registros.length);
+
+          adminRecordsTbody.innerHTML = '';
+
+          if (registros.length === 0) {
+            adminEmptyState.classList.remove('hidden');
+            btnDownloadCsv.disabled = true;
+            btnRequestClear.disabled = true;
+            return;
+          }
+
+          adminEmptyState.classList.add('hidden');
+          btnDownloadCsv.disabled = false;
+          btnRequestClear.disabled = false;
+
+          // Exibir os registros mais recentes primeiro na prévia
+          var ordered = registros.slice().reverse();
+          ordered.forEach(function (item) {
+            var tr = document.createElement('tr');
+            tr.className = 'hover:bg-slate-50/80';
+            tr.innerHTML =
+              '<td class="py-2.5 px-3 font-medium text-slate-900 max-w-[120px] truncate">' +
+              escapeHtml(item.registro || item.nome || '') +
+              '</td>' +
+              '<td class="py-2.5 px-3 text-slate-600 max-w-[160px] truncate">' +
+              escapeHtml(item.email || '') +
+              '</td>' +
+              '<td class="py-2.5 px-3 text-slate-700 whitespace-nowrap">' +
+              escapeHtml(item.fabrica || '-') +
+              '</td>' +
+              '<td class="py-2.5 px-3 font-mono tabular-nums text-xs text-slate-500 whitespace-nowrap">' +
+              escapeHtml(item.dataHora || '') +
+              '</td>';
+            adminRecordsTbody.appendChild(tr);
+          });
+        }
+
+        function showAdminFeedback(message, type) {
+          adminFeedback.textContent = message;
+          adminFeedback.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200', 'bg-slate-100', 'text-slate-700');
+          if (type === 'success') {
+            adminFeedback.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
+          } else {
+            adminFeedback.classList.add('bg-slate-100', 'text-slate-700');
+          }
+        }
+
+        btnOpenAdmin.addEventListener('click', openAdminModal);
+        btnCloseAdmin.addEventListener('click', closeAdminModal);
+        btnCancelAuth.addEventListener('click', closeAdminModal);
+        adminBackdrop.addEventListener('click', closeAdminModal);
+
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' && !adminModal.classList.contains('hidden')) {
+            closeAdminModal();
+          }
+        });
+
+        adminLoginForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          var typed = adminPasswordInput.value;
+
+          if (typed === ADMIN_PASSWORD) {
+            adminAuthError.classList.add('hidden');
+            adminAuthStep.classList.add('hidden');
+            adminPanelStep.classList.remove('hidden');
+            renderAdminTable();
+          } else {
+            adminAuthError.classList.remove('hidden');
+            adminPasswordInput.focus();
+            adminPasswordInput.select();
+          }
+        });
+
+        // Exportar CSV com BOM UTF-8 (compatível com Excel e Planilhas Google)
+        function escapeCsvCell(value) {
+          var str = String(value == null ? '' : value);
+          return '"' + str.replace(/"/g, '""') + '"';
+        }
+
+        btnDownloadCsv.addEventListener('click', function () {
+          var registros = getRegistros();
+          if (registros.length === 0) return;
+
+          var header = ['Registro', 'Email', 'Fábrica', 'Data/Hora'];
+          var lines = [header.map(escapeCsvCell).join(',')];
+
+          registros.forEach(function (reg) {
+            lines.push(
+              [
+                escapeCsvCell(reg.registro || reg.nome || ''),
+                escapeCsvCell(reg.email || ''),
+                escapeCsvCell(reg.fabrica || ''),
+                escapeCsvCell(reg.dataHora || ''),
+              ].join(',')
+            );
+          });
+
+          var csvContent = '\uFEFF' + lines.join('\r\n');
+          var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+          var url = URL.createObjectURL(blob);
+
+          var today = new Date().toISOString().slice(0, 10);
+          var link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'registros_campanha_quishing_' + today + '.csv');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+
+          showAdminFeedback('Arquivo CSV gerado e baixado com sucesso.', 'success');
+        });
+
+        // Limpar registros com confirmação inline
+        btnRequestClear.addEventListener('click', function () {
+          adminFeedback.classList.add('hidden');
+          adminClearConfirm.classList.remove('hidden');
+        });
+
+        btnCancelClear.addEventListener('click', function () {
+          adminClearConfirm.classList.add('hidden');
+        });
+
+        btnConfirmClear.addEventListener('click', function () {
+          localStorage.removeItem(STORAGE_KEY);
+          adminClearConfirm.classList.add('hidden');
+          renderAdminTable();
+          showAdminFeedback('Todos os registros locais foram removidos.', 'neutral');
+        });
+      })();
+    </script>
+  </body>
+</html>
+
