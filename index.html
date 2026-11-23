@@ -251,10 +251,11 @@
             <!-- Botão de Ação -->
             <div class="pt-1">
               <button
+                id="btn-submit-capture"
                 type="submit"
-                class="w-full min-h-[48px] px-6 py-3 rounded-xl bg-navy-900 hover:bg-navy-800 active:scale-[0.99] text-white font-display font-semibold text-sm sm:text-base transition-all duration-150 flex items-center justify-center gap-2 whitespace-nowrap shadow-sm cursor-pointer"
+                class="w-full min-h-[48px] px-6 py-3 rounded-xl bg-navy-900 hover:bg-navy-800 active:scale-[0.99] text-white font-display font-semibold text-sm sm:text-base transition-all duration-150 flex items-center justify-center gap-2 whitespace-nowrap shadow-sm cursor-pointer disabled:opacity-60 disabled:cursor-wait"
               >
-                <span>Validar Acesso</span>
+                <span id="btn-submit-label">Validar Acesso</span>
                 <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
@@ -309,14 +310,14 @@
             Calma, seus dados estão seguros! Esta página faz parte da nossa Campanha de Conscientização em Segurança da Informação. No mundo real, cibercriminosos usam QR Codes falsos colados sobre cartazes legítimos ou enviados por e-mail para roubar suas credenciais.
           </p>
 
-          <!-- Confirmação discreta de segurança local -->
+          <!-- Confirmação discreta de segurança dos dados -->
           <div class="mt-5 flex items-start sm:items-center gap-2.5 text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 max-w-2xl">
             <svg class="w-5 h-5 text-emerald-700 shrink-0 mt-0.5 sm:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               <path d="m9 12 2 2 4-4"></path>
             </svg>
             <span>
-              Nenhuma informação digitada foi enviada para servidores externos. Tudo permaneceu apenas localmente neste navegador.
+              Seu registro de participação foi contabilizado apenas para métricas internas desta campanha educativa. Nenhuma senha ou dado bancário foi solicitado.
             </span>
           </div>
         </div>
@@ -519,7 +520,7 @@
               Área do Organizador
             </h2>
             <p class="text-xs text-slate-500 mt-0.5">
-              Gerenciamento local dos registros da simulação
+              Gerenciamento centralizado em nuvem dos registros da simulação
             </p>
           </div>
           <button
@@ -535,10 +536,10 @@
           </button>
         </div>
 
-        <!-- Passo 1: Autenticação por Senha -->
+        <!-- Passo 1: Autenticação por Senha + Conta Google Organizador -->
         <div id="admin-auth-step" class="p-6 space-y-4">
           <p class="text-sm text-slate-600">
-            Informe a senha do organizador para visualizar a contagem de participantes, exportar o relatório em CSV ou limpar os dados locais.
+            Informe a senha do organizador e confirme com sua conta Google autorizada para consultar os cadastros de todos os dispositivos, exportar CSV ou limpar os dados.
           </p>
 
           <form id="admin-login-form" class="space-y-4" novalidate>
@@ -553,13 +554,13 @@
                 placeholder="Digite a senha do organizador"
                 class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-900 placeholder:text-slate-400 text-sm focus:border-azure-600 focus:ring-2 focus:ring-azure-600/20 focus:outline-none"
               />
-              <p id="admin-auth-error" class="hidden mt-1.5 text-xs font-medium text-red-700 flex items-center gap-1.5" role="alert">
-                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <p id="admin-auth-error" class="hidden mt-1.5 text-xs font-medium text-red-700 flex items-start gap-1.5" role="alert">
+                <svg class="w-3.5 h-3.5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <circle cx="12" cy="12" r="10"></circle>
                   <line x1="15" y1="9" x2="9" y2="15"></line>
                   <line x1="9" y1="9" x2="15" y2="15"></line>
                 </svg>
-                <span>Senha incorreta. Tente novamente.</span>
+                <span id="admin-auth-error-text">Senha incorreta. Tente novamente.</span>
               </p>
             </div>
 
@@ -572,8 +573,9 @@
                 Cancelar
               </button>
               <button
+                id="btn-admin-submit"
                 type="submit"
-                class="min-h-[44px] px-5 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap"
+                class="min-h-[44px] px-5 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap disabled:opacity-60"
               >
                 Entrar
               </button>
@@ -583,13 +585,35 @@
 
         <!-- Passo 2: Painel de Exportação e Limpeza -->
         <div id="admin-panel-step" class="hidden p-6 space-y-5">
+          <!-- Identificação da conta conectada -->
+          <div class="flex items-center justify-between gap-3 text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5">
+            <span class="truncate">Conectado: <strong id="admin-user-email" class="text-navy-900 font-medium">-</strong></span>
+            <button
+              id="btn-admin-signout"
+              type="button"
+              class="text-azure-700 hover:text-azure-800 font-medium hover:underline cursor-pointer shrink-0"
+            >
+              Trocar conta
+            </button>
+          </div>
+
           <!-- Resumo Numérico -->
           <div class="flex items-center justify-between gap-4 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5">
             <div>
-              <span class="text-xs font-medium text-slate-500 block">Registros salvos neste navegador</span>
+              <span class="text-xs font-medium text-slate-500 block">Registros salvos na nuvem</span>
               <span id="admin-records-count" class="font-mono tabular-nums text-2xl font-semibold text-navy-900">0</span>
             </div>
-            <span class="text-xs text-slate-500 font-mono">localStorage</span>
+            <button
+              id="btn-refresh-records"
+              type="button"
+              class="min-h-[38px] px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 text-xs font-medium transition-colors cursor-pointer inline-flex items-center gap-1.5"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+              <span>Atualizar</span>
+            </button>
           </div>
 
           <!-- Lista prévia dos registros -->
@@ -610,7 +634,7 @@
               </table>
             </div>
             <div id="admin-empty-state" class="hidden py-8 px-4 text-center text-sm text-slate-500">
-              Nenhum registro capturado ainda neste navegador.
+              Nenhum registro capturado ainda no banco de dados.
             </div>
           </div>
 
@@ -672,399 +696,608 @@
     </div>
 
     <!-- =================================================================== -->
-    <!-- LÓGICA DA APLICAÇÃO (SPA, VALIDAÇÃO, LOCALSTORAGE E EXPORTAÇÃO CSV) -->
+    <!-- LÓGICA DA APLICAÇÃO (SPA, VALIDAÇÃO, FIRESTORE, AUTH E CSV)         -->
     <!-- =================================================================== -->
-    <script>
-      (function () {
-        'use strict';
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
+      import {
+        getAuth,
+        GoogleAuthProvider,
+        signInWithPopup,
+        signOut,
+      } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js';
+      import {
+        getFirestore,
+        collection,
+        doc,
+        setDoc,
+        getDocs,
+        getDocFromServer,
+        query,
+        orderBy,
+        serverTimestamp,
+        writeBatch,
+      } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
 
-        var STORAGE_KEY = 'campanha_quishing_registros';
-        var ADMIN_PASSWORD = '#Muc!0hba%A8h';
+      const firebaseConfig = {
+        projectId: 'original-oven-rbpf3',
+        appId: '1:70265803794:web:8e8e1b2c8c919a57be34cb',
+        apiKey: 'AIzaSyAll16Kmxr89G37uGEaYlwFU_R2mgUF77s',
+        authDomain: 'original-oven-rbpf3.firebaseapp.com',
+        firestoreDatabaseId: 'ai-studio-testeqrcode-40c89962-9e54-4fa1-9d88-8307605d239e',
+        storageBucket: 'original-oven-rbpf3.firebasestorage.app',
+        messagingSenderId: '70265803794',
+      };
 
-        // Elementos das Telas
-        var screenCapture = document.getElementById('screen-capture');
-        var screenReveal = document.getElementById('screen-reveal');
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+      const auth = getAuth(app);
+      const googleProvider = new GoogleAuthProvider();
+      googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-        // Elementos do Formulário de Captura
-        var captureForm = document.getElementById('capture-form');
-        var inputRegistro = document.getElementById('input-registro');
-        var inputEmail = document.getElementById('input-email');
-        var inputFabrica = document.getElementById('input-fabrica');
-        var errorRegistro = document.getElementById('error-registro');
-        var errorEmail = document.getElementById('error-email');
-        var errorEmailText = document.getElementById('error-email-text');
-        var errorFabrica = document.getElementById('error-fabrica');
+      const OperationType = {
+        CREATE: 'create',
+        UPDATE: 'update',
+        DELETE: 'delete',
+        LIST: 'list',
+        GET: 'get',
+        WRITE: 'write',
+      };
 
-        // Elementos da Tela 2
-        var btnAcknowledge = document.getElementById('btn-acknowledge');
-        var ackActionWrapper = document.getElementById('ack-action-wrapper');
-        var ackSuccessMessage = document.getElementById('ack-success-message');
-        var btnBackToStart = document.getElementById('btn-back-to-start');
+      function handleFirestoreError(error, operationType, path) {
+        const currentUser = auth.currentUser;
+        const errInfo = {
+          error: error instanceof Error ? error.message : String(error),
+          authInfo: {
+            userId: currentUser ? currentUser.uid : null,
+            email: currentUser ? currentUser.email : null,
+            emailVerified: currentUser ? currentUser.emailVerified : null,
+            isAnonymous: currentUser ? currentUser.isAnonymous : null,
+            tenantId: currentUser ? currentUser.tenantId : null,
+            providerInfo:
+              currentUser && Array.isArray(currentUser.providerData)
+                ? currentUser.providerData.map((provider) => ({
+                    providerId: provider.providerId,
+                    email: provider.email,
+                  }))
+                : [],
+          },
+          operationType,
+          path,
+        };
+        console.error('Firestore Error: ', JSON.stringify(errInfo));
+        throw new Error(JSON.stringify(errInfo));
+      }
 
-        // Elementos do Modal Administrativo
-        var adminModal = document.getElementById('admin-modal');
-        var adminBackdrop = document.getElementById('admin-modal-backdrop');
-        var btnOpenAdmin = document.getElementById('btn-open-admin');
-        var btnCloseAdmin = document.getElementById('btn-close-admin');
-        var btnCancelAuth = document.getElementById('btn-cancel-auth');
-        var adminAuthStep = document.getElementById('admin-auth-step');
-        var adminPanelStep = document.getElementById('admin-panel-step');
-        var adminLoginForm = document.getElementById('admin-login-form');
-        var adminPasswordInput = document.getElementById('admin-password');
-        var adminAuthError = document.getElementById('admin-auth-error');
-        var adminRecordsCount = document.getElementById('admin-records-count');
-        var adminRecordsTbody = document.getElementById('admin-records-tbody');
-        var adminEmptyState = document.getElementById('admin-empty-state');
-        var adminFeedback = document.getElementById('admin-feedback');
-        var adminClearConfirm = document.getElementById('admin-clear-confirm');
-        var btnRequestClear = document.getElementById('btn-request-clear');
-        var btnCancelClear = document.getElementById('btn-cancel-clear');
-        var btnConfirmClear = document.getElementById('btn-confirm-clear');
-        var btnDownloadCsv = document.getElementById('btn-download-csv');
-
-        // Leitura segura do localStorage
-        function getRegistros() {
-          try {
-            var raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) return [];
-            var parsed = JSON.parse(raw);
-            return Array.isArray(parsed) ? parsed : [];
-          } catch (err) {
-            return [];
+      async function testConnection() {
+        try {
+          await getDocFromServer(doc(db, 'test', 'connection'));
+        } catch (error) {
+          if (error instanceof Error && error.message.includes('the client is offline')) {
+            console.error('Please check your Firebase configuration.');
           }
         }
+      }
+      testConnection();
 
-        function saveRegistros(lista) {
-          try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
-            return true;
-          } catch (err) {
-            return false;
-          }
+      const LEGACY_STORAGE_KEY = 'campanha_quishing_registros';
+      const ADMIN_PASSWORD = '#Muc!0hba%A8h';
+      const ALLOWED_FABRICAS = ['Fabrica1', 'Fabrica2', 'Fabrica4', 'Fabrica5', 'Fabrica6'];
+
+      // Elementos das Telas
+      const screenCapture = document.getElementById('screen-capture');
+      const screenReveal = document.getElementById('screen-reveal');
+
+      // Elementos do Formulário de Captura
+      const captureForm = document.getElementById('capture-form');
+      const inputRegistro = document.getElementById('input-registro');
+      const inputEmail = document.getElementById('input-email');
+      const inputFabrica = document.getElementById('input-fabrica');
+      const errorRegistro = document.getElementById('error-registro');
+      const errorEmail = document.getElementById('error-email');
+      const errorEmailText = document.getElementById('error-email-text');
+      const errorFabrica = document.getElementById('error-fabrica');
+      const btnSubmitCapture = document.getElementById('btn-submit-capture');
+      const btnSubmitLabel = document.getElementById('btn-submit-label');
+
+      // Elementos da Tela 2
+      const btnAcknowledge = document.getElementById('btn-acknowledge');
+      const ackActionWrapper = document.getElementById('ack-action-wrapper');
+      const ackSuccessMessage = document.getElementById('ack-success-message');
+      const btnBackToStart = document.getElementById('btn-back-to-start');
+
+      // Elementos do Modal Administrativo
+      const adminModal = document.getElementById('admin-modal');
+      const adminBackdrop = document.getElementById('admin-modal-backdrop');
+      const btnOpenAdmin = document.getElementById('btn-open-admin');
+      const btnCloseAdmin = document.getElementById('btn-close-admin');
+      const btnCancelAuth = document.getElementById('btn-cancel-auth');
+      const adminAuthStep = document.getElementById('admin-auth-step');
+      const adminPanelStep = document.getElementById('admin-panel-step');
+      const adminLoginForm = document.getElementById('admin-login-form');
+      const adminPasswordInput = document.getElementById('admin-password');
+      const adminAuthError = document.getElementById('admin-auth-error');
+      const adminAuthErrorText = document.getElementById('admin-auth-error-text');
+      const btnAdminSubmit = document.getElementById('btn-admin-submit');
+      const adminUserEmail = document.getElementById('admin-user-email');
+      const btnAdminSignout = document.getElementById('btn-admin-signout');
+      const btnRefreshRecords = document.getElementById('btn-refresh-records');
+      const adminRecordsCount = document.getElementById('admin-records-count');
+      const adminRecordsTbody = document.getElementById('admin-records-tbody');
+      const adminEmptyState = document.getElementById('admin-empty-state');
+      const adminFeedback = document.getElementById('admin-feedback');
+      const adminClearConfirm = document.getElementById('admin-clear-confirm');
+      const btnRequestClear = document.getElementById('btn-request-clear');
+      const btnCancelClear = document.getElementById('btn-cancel-clear');
+      const btnConfirmClear = document.getElementById('btn-confirm-clear');
+      const btnDownloadCsv = document.getElementById('btn-download-csv');
+
+      let cachedCloudRecords = [];
+      let isSubmittingCapture = false;
+
+      function formatDateTime(date) {
+        const pad = (n) => String(n).padStart(2, '0');
+        return (
+          pad(date.getDate()) +
+          '/' +
+          pad(date.getMonth() + 1) +
+          '/' +
+          date.getFullYear() +
+          ' ' +
+          pad(date.getHours()) +
+          ':' +
+          pad(date.getMinutes()) +
+          ':' +
+          pad(date.getSeconds())
+        );
+      }
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && email.length >= 5 && email.length <= 254;
+      }
+
+      function setFieldError(inputEl, errorEl, hasError) {
+        if (hasError) {
+          inputEl.classList.remove('border-slate-300');
+          inputEl.classList.add('border-red-500');
+          inputEl.setAttribute('aria-invalid', 'true');
+          errorEl.classList.remove('hidden');
+        } else {
+          inputEl.classList.remove('border-red-500');
+          inputEl.classList.add('border-slate-300');
+          inputEl.removeAttribute('aria-invalid');
+          errorEl.classList.add('hidden');
         }
+      }
 
-        function formatDateTime(date) {
-          var pad = function (n) {
-            return String(n).padStart(2, '0');
-          };
-          return (
-            pad(date.getDate()) +
-            '/' +
-            pad(date.getMonth() + 1) +
-            '/' +
-            date.getFullYear() +
-            ' ' +
-            pad(date.getHours()) +
-            ':' +
-            pad(date.getMinutes()) +
-            ':' +
-            pad(date.getSeconds())
-          );
-        }
-
-        // Validação de email (formato padrão simplificado)
-        function isValidEmail(email) {
-          return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-        }
-
-        function setFieldError(inputEl, errorEl, hasError) {
-          if (hasError) {
-            inputEl.classList.remove('border-slate-300');
-            inputEl.classList.add('border-red-500');
-            inputEl.setAttribute('aria-invalid', 'true');
-            errorEl.classList.remove('hidden');
-          } else {
-            inputEl.classList.remove('border-red-500');
-            inputEl.classList.add('border-slate-300');
-            inputEl.removeAttribute('aria-invalid');
-            errorEl.classList.add('hidden');
-          }
-        }
-
-        // Limpar erro enquanto usuário digita ou seleciona
-        inputRegistro.addEventListener('input', function () {
-          if (inputRegistro.value.trim().length > 0) {
-            setFieldError(inputRegistro, errorRegistro, false);
-          }
-        });
-
-        inputEmail.addEventListener('input', function () {
-          if (isValidEmail(inputEmail.value.trim())) {
-            setFieldError(inputEmail, errorEmail, false);
-          }
-        });
-
-        inputFabrica.addEventListener('change', function () {
-          if (inputFabrica.value) {
-            setFieldError(inputFabrica, errorFabrica, false);
-          }
-        });
-
-        // Transição suave entre telas
-        function showScreen(target) {
-          var outgoing = target === 'reveal' ? screenCapture : screenReveal;
-          var incoming = target === 'reveal' ? screenReveal : screenCapture;
-
-          outgoing.style.opacity = '0';
-          outgoing.style.transform = 'translateY(-8px)';
-
-          setTimeout(function () {
-            outgoing.classList.remove('screen-visible');
-            outgoing.classList.add('screen-hidden', 'hidden');
-            outgoing.style.opacity = '';
-            outgoing.style.transform = '';
-
-            incoming.classList.remove('screen-hidden', 'hidden');
-            incoming.classList.add('screen-entering');
-
-            requestAnimationFrame(function () {
-              requestAnimationFrame(function () {
-                incoming.classList.remove('screen-entering');
-                incoming.classList.add('screen-visible');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              });
-            });
-          }, 180);
-        }
-
-        // Submissão do formulário da Tela 1
-        captureForm.addEventListener('submit', function (event) {
-          event.preventDefault();
-
-          var registro = inputRegistro.value.trim();
-          var email = inputEmail.value.trim();
-          var fabrica = inputFabrica.value;
-          var valid = true;
-
-          if (!registro) {
-            setFieldError(inputRegistro, errorRegistro, true);
-            valid = false;
-          } else {
-            setFieldError(inputRegistro, errorRegistro, false);
-          }
-
-          if (!email) {
-            errorEmailText.textContent = 'Informe seu email para continuar.';
-            setFieldError(inputEmail, errorEmail, true);
-            valid = false;
-          } else if (!isValidEmail(email)) {
-            errorEmailText.textContent = 'Formato de email inválido. Verifique o endereço digitado.';
-            setFieldError(inputEmail, errorEmail, true);
-            valid = false;
-          } else {
-            setFieldError(inputEmail, errorEmail, false);
-          }
-
-          if (!fabrica) {
-            setFieldError(inputFabrica, errorFabrica, true);
-            valid = false;
-          } else {
-            setFieldError(inputFabrica, errorFabrica, false);
-          }
-
-          if (!valid) {
-            if (!registro) {
-              inputRegistro.focus();
-            } else if (!email || !isValidEmail(email)) {
-              inputEmail.focus();
-            } else {
-              inputFabrica.focus();
-            }
-            return;
-          }
-
-          // Salvar no localStorage sem enviar a servidor externo
-          var registros = getRegistros();
-          registros.push({
-            registro: registro,
-            email: email,
-            fabrica: fabrica,
-            dataHora: formatDateTime(new Date()),
-          });
-          saveRegistros(registros);
-
-          // Exibir Tela 2 imediatamente com transição suave
-          showScreen('reveal');
-        });
-
-        // Botão final da Tela 2
-        btnAcknowledge.addEventListener('click', function () {
-          ackActionWrapper.classList.add('hidden');
-          ackSuccessMessage.classList.remove('hidden');
-        });
-
-        // Botão para voltar ao início
-        btnBackToStart.addEventListener('click', function () {
-          captureForm.reset();
+      inputRegistro.addEventListener('input', () => {
+        if (inputRegistro.value.trim().length > 0) {
           setFieldError(inputRegistro, errorRegistro, false);
+        }
+      });
+
+      inputEmail.addEventListener('input', () => {
+        if (isValidEmail(inputEmail.value.trim())) {
           setFieldError(inputEmail, errorEmail, false);
+        }
+      });
+
+      inputFabrica.addEventListener('change', () => {
+        if (inputFabrica.value) {
           setFieldError(inputFabrica, errorFabrica, false);
-          ackSuccessMessage.classList.add('hidden');
-          ackActionWrapper.classList.remove('hidden');
-          showScreen('capture');
-        });
-
-        // =================================================================
-        // ÁREA DO ORGANIZADOR (MODAL + SENHA + EXPORTAÇÃO CSV + LIMPEZA)
-        // =================================================================
-        function openAdminModal() {
-          adminAuthStep.classList.remove('hidden');
-          adminPanelStep.classList.add('hidden');
-          adminAuthError.classList.add('hidden');
-          adminFeedback.classList.add('hidden');
-          adminClearConfirm.classList.add('hidden');
-          adminPasswordInput.value = '';
-          adminModal.classList.remove('hidden');
-          setTimeout(function () {
-            adminPasswordInput.focus();
-          }, 50);
         }
+      });
 
-        function closeAdminModal() {
-          adminModal.classList.add('hidden');
-          adminPasswordInput.value = '';
-          adminClearConfirm.classList.add('hidden');
-        }
+      function showScreen(target) {
+        const outgoing = target === 'reveal' ? screenCapture : screenReveal;
+        const incoming = target === 'reveal' ? screenReveal : screenCapture;
 
-        function escapeHtml(text) {
-          var div = document.createElement('div');
-          div.textContent = text;
-          return div.innerHTML;
-        }
+        outgoing.style.opacity = '0';
+        outgoing.style.transform = 'translateY(-8px)';
 
-        function renderAdminTable() {
-          var registros = getRegistros();
-          adminRecordsCount.textContent = String(registros.length);
+        setTimeout(() => {
+          outgoing.classList.remove('screen-visible');
+          outgoing.classList.add('screen-hidden', 'hidden');
+          outgoing.style.opacity = '';
+          outgoing.style.transform = '';
 
-          adminRecordsTbody.innerHTML = '';
+          incoming.classList.remove('screen-hidden', 'hidden');
+          incoming.classList.add('screen-entering');
 
-          if (registros.length === 0) {
-            adminEmptyState.classList.remove('hidden');
-            btnDownloadCsv.disabled = true;
-            btnRequestClear.disabled = true;
-            return;
-          }
-
-          adminEmptyState.classList.add('hidden');
-          btnDownloadCsv.disabled = false;
-          btnRequestClear.disabled = false;
-
-          // Exibir os registros mais recentes primeiro na prévia
-          var ordered = registros.slice().reverse();
-          ordered.forEach(function (item) {
-            var tr = document.createElement('tr');
-            tr.className = 'hover:bg-slate-50/80';
-            tr.innerHTML =
-              '<td class="py-2.5 px-3 font-medium text-slate-900 max-w-[120px] truncate">' +
-              escapeHtml(item.registro || item.nome || '') +
-              '</td>' +
-              '<td class="py-2.5 px-3 text-slate-600 max-w-[160px] truncate">' +
-              escapeHtml(item.email || '') +
-              '</td>' +
-              '<td class="py-2.5 px-3 text-slate-700 whitespace-nowrap">' +
-              escapeHtml(item.fabrica || '-') +
-              '</td>' +
-              '<td class="py-2.5 px-3 font-mono tabular-nums text-xs text-slate-500 whitespace-nowrap">' +
-              escapeHtml(item.dataHora || '') +
-              '</td>';
-            adminRecordsTbody.appendChild(tr);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              incoming.classList.remove('screen-entering');
+              incoming.classList.add('screen-visible');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
           });
+        }, 180);
+      }
+
+      async function saveRegistrationToFirestore(registro, email, fabrica, dataHora) {
+        const docId =
+          'reg_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10).replace(/[^a-zA-Z0-9_-]/g, '');
+        const docPath = 'registrations/' + docId;
+        const payload = {
+          registro: registro.slice(0, 80),
+          email: email.slice(0, 254),
+          fabrica: ALLOWED_FABRICAS.includes(fabrica) ? fabrica : 'Fabrica1',
+          dataHora: dataHora.slice(0, 32),
+          createdAt: serverTimestamp(),
+        };
+
+        try {
+          await setDoc(doc(db, 'registrations', docId), payload);
+        } catch (error) {
+          handleFirestoreError(error, OperationType.CREATE, docPath);
+        }
+      }
+
+      captureForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (isSubmittingCapture) return;
+
+        const registro = inputRegistro.value.trim().slice(0, 80);
+        const email = inputEmail.value.trim().slice(0, 254);
+        const fabrica = inputFabrica.value;
+        let valid = true;
+
+        if (!registro) {
+          setFieldError(inputRegistro, errorRegistro, true);
+          valid = false;
+        } else {
+          setFieldError(inputRegistro, errorRegistro, false);
         }
 
-        function showAdminFeedback(message, type) {
-          adminFeedback.textContent = message;
-          adminFeedback.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200', 'bg-slate-100', 'text-slate-700');
-          if (type === 'success') {
-            adminFeedback.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
+        if (!email) {
+          errorEmailText.textContent = 'Informe seu email para continuar.';
+          setFieldError(inputEmail, errorEmail, true);
+          valid = false;
+        } else if (!isValidEmail(email)) {
+          errorEmailText.textContent = 'Formato de email inválido. Verifique o endereço digitado.';
+          setFieldError(inputEmail, errorEmail, true);
+          valid = false;
+        } else {
+          setFieldError(inputEmail, errorEmail, false);
+        }
+
+        if (!fabrica || !ALLOWED_FABRICAS.includes(fabrica)) {
+          setFieldError(inputFabrica, errorFabrica, true);
+          valid = false;
+        } else {
+          setFieldError(inputFabrica, errorFabrica, false);
+        }
+
+        if (!valid) {
+          if (!registro) {
+            inputRegistro.focus();
+          } else if (!email || !isValidEmail(email)) {
+            inputEmail.focus();
           } else {
-            adminFeedback.classList.add('bg-slate-100', 'text-slate-700');
+            inputFabrica.focus();
           }
+          return;
         }
 
-        btnOpenAdmin.addEventListener('click', openAdminModal);
-        btnCloseAdmin.addEventListener('click', closeAdminModal);
-        btnCancelAuth.addEventListener('click', closeAdminModal);
-        adminBackdrop.addEventListener('click', closeAdminModal);
+        const dataHora = formatDateTime(new Date());
+        isSubmittingCapture = true;
+        btnSubmitCapture.disabled = true;
+        btnSubmitLabel.textContent = 'Validando...';
 
-        document.addEventListener('keydown', function (event) {
-          if (event.key === 'Escape' && !adminModal.classList.contains('hidden')) {
-            closeAdminModal();
-          }
-        });
-
-        adminLoginForm.addEventListener('submit', function (event) {
-          event.preventDefault();
-          var typed = adminPasswordInput.value;
-
-          if (typed === ADMIN_PASSWORD) {
-            adminAuthError.classList.add('hidden');
-            adminAuthStep.classList.add('hidden');
-            adminPanelStep.classList.remove('hidden');
-            renderAdminTable();
-          } else {
-            adminAuthError.classList.remove('hidden');
-            adminPasswordInput.focus();
-            adminPasswordInput.select();
-          }
-        });
-
-        // Exportar CSV com BOM UTF-8 (compatível com Excel e Planilhas Google)
-        function escapeCsvCell(value) {
-          var str = String(value == null ? '' : value);
-          return '"' + str.replace(/"/g, '""') + '"';
+        try {
+          await saveRegistrationToFirestore(registro, email, fabrica, dataHora);
+        } catch (err) {
+          console.error('Erro ao salvar no banco em nuvem:', err);
+        } finally {
+          isSubmittingCapture = false;
+          btnSubmitCapture.disabled = false;
+          btnSubmitLabel.textContent = 'Validar Acesso';
         }
 
-        btnDownloadCsv.addEventListener('click', function () {
-          var registros = getRegistros();
-          if (registros.length === 0) return;
+        showScreen('reveal');
+      });
 
-          var header = ['Registro', 'Email', 'Fábrica', 'Data/Hora'];
-          var lines = [header.map(escapeCsvCell).join(',')];
+      btnAcknowledge.addEventListener('click', () => {
+        ackActionWrapper.classList.add('hidden');
+        ackSuccessMessage.classList.remove('hidden');
+      });
 
-          registros.forEach(function (reg) {
-            lines.push(
-              [
-                escapeCsvCell(reg.registro || reg.nome || ''),
-                escapeCsvCell(reg.email || ''),
-                escapeCsvCell(reg.fabrica || ''),
-                escapeCsvCell(reg.dataHora || ''),
-              ].join(',')
+      btnBackToStart.addEventListener('click', () => {
+        captureForm.reset();
+        setFieldError(inputRegistro, errorRegistro, false);
+        setFieldError(inputEmail, errorEmail, false);
+        setFieldError(inputFabrica, errorFabrica, false);
+        ackSuccessMessage.classList.add('hidden');
+        ackActionWrapper.classList.remove('hidden');
+        showScreen('capture');
+      });
+
+      // =================================================================
+      // ÁREA DO ORGANIZADOR (SENHA + GOOGLE AUTH + FIRESTORE + CSV)
+      // =================================================================
+      function showAdminAuthError(msg) {
+        adminAuthErrorText.textContent = msg;
+        adminAuthError.classList.remove('hidden');
+      }
+
+      function showAdminFeedback(message, type) {
+        adminFeedback.textContent = message;
+        adminFeedback.classList.remove(
+          'hidden',
+          'bg-emerald-50',
+          'text-emerald-800',
+          'border',
+          'border-emerald-200',
+          'bg-red-50',
+          'text-red-800',
+          'border-red-200',
+          'bg-slate-100',
+          'text-slate-700'
+        );
+        if (type === 'success') {
+          adminFeedback.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
+        } else if (type === 'error') {
+          adminFeedback.classList.add('bg-red-50', 'text-red-800', 'border', 'border-red-200');
+        } else {
+          adminFeedback.classList.add('bg-slate-100', 'text-slate-700');
+        }
+      }
+
+      function openAdminModal() {
+        adminAuthStep.classList.remove('hidden');
+        adminPanelStep.classList.add('hidden');
+        adminAuthError.classList.add('hidden');
+        adminFeedback.classList.add('hidden');
+        adminClearConfirm.classList.add('hidden');
+        adminPasswordInput.value = '';
+        adminModal.classList.remove('hidden');
+        setTimeout(() => {
+          adminPasswordInput.focus();
+        }, 50);
+      }
+
+      function closeAdminModal() {
+        adminModal.classList.add('hidden');
+        adminPasswordInput.value = '';
+        adminClearConfirm.classList.add('hidden');
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      function renderAdminTable(registros) {
+        adminRecordsCount.textContent = String(registros.length);
+        adminRecordsTbody.innerHTML = '';
+
+        if (registros.length === 0) {
+          adminEmptyState.classList.remove('hidden');
+          btnDownloadCsv.disabled = true;
+          btnRequestClear.disabled = true;
+          return;
+        }
+
+        adminEmptyState.classList.add('hidden');
+        btnDownloadCsv.disabled = false;
+        btnRequestClear.disabled = false;
+
+        registros.forEach((item) => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-slate-50/80';
+          tr.innerHTML =
+            '<td class="py-2.5 px-3 font-medium text-slate-900 max-w-[120px] truncate">' +
+            escapeHtml(item.registro || item.nome || '') +
+            '</td>' +
+            '<td class="py-2.5 px-3 text-slate-600 max-w-[160px] truncate">' +
+            escapeHtml(item.email || '') +
+            '</td>' +
+            '<td class="py-2.5 px-3 text-slate-700 whitespace-nowrap">' +
+            escapeHtml(item.fabrica || '-') +
+            '</td>' +
+            '<td class="py-2.5 px-3 font-mono tabular-nums text-xs text-slate-500 whitespace-nowrap">' +
+            escapeHtml(item.dataHora || '') +
+            '</td>';
+          adminRecordsTbody.appendChild(tr);
+        });
+      }
+
+      async function loadCloudRegistrations() {
+        btnRefreshRecords.disabled = true;
+        adminRecordsTbody.innerHTML =
+          '<tr><td colspan="4" class="py-6 px-3 text-center text-xs text-slate-500">Carregando registros...</td></tr>';
+        adminEmptyState.classList.add('hidden');
+
+        try {
+          const q = query(collection(db, 'registrations'), orderBy('createdAt', 'desc'));
+          const snapshot = await getDocs(q);
+          cachedCloudRecords = snapshot.docs.map((d) => ({
+            id: d.id,
+            ...d.data(),
+          }));
+          renderAdminTable(cachedCloudRecords);
+        } catch (error) {
+          cachedCloudRecords = [];
+          renderAdminTable([]);
+          try {
+            handleFirestoreError(error, OperationType.LIST, 'registrations');
+          } catch (formattedErr) {
+            const msg = formattedErr instanceof Error ? formattedErr.message : '';
+            if (msg.includes('Missing or insufficient permissions') || msg.includes('PERMISSION_DENIED')) {
+              showAdminFeedback(
+                'A conta Google conectada não possui permissão de organizador. Clique em "Trocar conta" e entre com a conta autorizada.',
+                'error'
+              );
+            } else {
+              showAdminFeedback('Não foi possível carregar os registros da nuvem. Tente atualizar.', 'error');
+            }
+          }
+        } finally {
+          btnRefreshRecords.disabled = false;
+        }
+      }
+
+      btnOpenAdmin.addEventListener('click', openAdminModal);
+      btnCloseAdmin.addEventListener('click', closeAdminModal);
+      btnCancelAuth.addEventListener('click', closeAdminModal);
+      adminBackdrop.addEventListener('click', closeAdminModal);
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !adminModal.classList.contains('hidden')) {
+          closeAdminModal();
+        }
+      });
+
+      adminLoginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const typed = adminPasswordInput.value;
+
+        if (typed !== ADMIN_PASSWORD) {
+          showAdminAuthError('Senha incorreta. Tente novamente.');
+          adminPasswordInput.focus();
+          adminPasswordInput.select();
+          return;
+        }
+
+        adminAuthError.classList.add('hidden');
+        btnAdminSubmit.disabled = true;
+        btnAdminSubmit.textContent = 'Autenticando...';
+
+        try {
+          let user = auth.currentUser;
+          if (!user) {
+            const result = await signInWithPopup(auth, googleProvider);
+            user = result.user;
+          }
+
+          adminUserEmail.textContent = user && user.email ? user.email : 'Conta Google';
+          adminAuthStep.classList.add('hidden');
+          adminPanelStep.classList.remove('hidden');
+          await loadCloudRegistrations();
+        } catch (err) {
+          const code = err && typeof err === 'object' && 'code' in err ? String(err.code) : '';
+          if (code === 'auth/unauthorized-domain') {
+            showAdminAuthError(
+              'Domínio "' +
+                window.location.hostname +
+                '" não autorizado no Firebase Auth. Adicione-o em Firebase Console → Authentication → Settings → Authorized domains.'
             );
-          });
+          } else if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+            showAdminAuthError('Login com Google cancelado. Tente novamente.');
+          } else {
+            showAdminAuthError('Falha ao autenticar com Google. Verifique se os pop-ups estão permitidos.');
+          }
+        } finally {
+          btnAdminSubmit.disabled = false;
+          btnAdminSubmit.textContent = 'Entrar';
+        }
+      });
 
-          var csvContent = '\uFEFF' + lines.join('\r\n');
-          var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-          var url = URL.createObjectURL(blob);
+      btnAdminSignout.addEventListener('click', async () => {
+        try {
+          await signOut(auth);
+        } catch (err) {
+          console.error(err);
+        }
+        cachedCloudRecords = [];
+        adminPanelStep.classList.add('hidden');
+        adminAuthStep.classList.remove('hidden');
+        adminFeedback.classList.add('hidden');
+        adminClearConfirm.classList.add('hidden');
+        adminPasswordInput.value = '';
+        adminPasswordInput.focus();
+      });
 
-          var today = new Date().toISOString().slice(0, 10);
-          var link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'registros_campanha_quishing_' + today + '.csv');
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
+      btnRefreshRecords.addEventListener('click', async () => {
+        adminFeedback.classList.add('hidden');
+        await loadCloudRegistrations();
+      });
 
-          showAdminFeedback('Arquivo CSV gerado e baixado com sucesso.', 'success');
+      function escapeCsvCell(value) {
+        const str = String(value == null ? '' : value);
+        return '"' + str.replace(/"/g, '""') + '"';
+      }
+
+      btnDownloadCsv.addEventListener('click', () => {
+        if (cachedCloudRecords.length === 0) return;
+
+        const header = ['Registro', 'Email', 'Fábrica', 'Data/Hora'];
+        const lines = [header.map(escapeCsvCell).join(',')];
+
+        cachedCloudRecords.forEach((reg) => {
+          lines.push(
+            [
+              escapeCsvCell(reg.registro || reg.nome || ''),
+              escapeCsvCell(reg.email || ''),
+              escapeCsvCell(reg.fabrica || ''),
+              escapeCsvCell(reg.dataHora || ''),
+            ].join(',')
+          );
         });
 
-        // Limpar registros com confirmação inline
-        btnRequestClear.addEventListener('click', function () {
-          adminFeedback.classList.add('hidden');
-          adminClearConfirm.classList.remove('hidden');
-        });
+        const csvContent = '\uFEFF' + lines.join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
 
-        btnCancelClear.addEventListener('click', function () {
+        const today = new Date().toISOString().slice(0, 10);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'registros_campanha_quishing_' + today + '.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        showAdminFeedback('Arquivo CSV gerado e baixado com sucesso.', 'success');
+      });
+
+      btnRequestClear.addEventListener('click', () => {
+        adminFeedback.classList.add('hidden');
+        adminClearConfirm.classList.remove('hidden');
+      });
+
+      btnCancelClear.addEventListener('click', () => {
+        adminClearConfirm.classList.add('hidden');
+      });
+
+      btnConfirmClear.addEventListener('click', async () => {
+        btnConfirmClear.disabled = true;
+        btnConfirmClear.textContent = 'Removendo...';
+
+        try {
+          const snapshot = await getDocs(collection(db, 'registrations'));
+          const docsToDelete = snapshot.docs;
+          const chunkSize = 450;
+
+          for (let i = 0; i < docsToDelete.length; i += chunkSize) {
+            const batch = writeBatch(db);
+            docsToDelete.slice(i, i + chunkSize).forEach((d) => {
+              batch.delete(d.ref);
+            });
+            await batch.commit();
+          }
+
+          try {
+            localStorage.removeItem(LEGACY_STORAGE_KEY);
+          } catch (e) {
+            // ignore
+          }
+
           adminClearConfirm.classList.add('hidden');
-        });
-
-        btnConfirmClear.addEventListener('click', function () {
-          localStorage.removeItem(STORAGE_KEY);
-          adminClearConfirm.classList.add('hidden');
-          renderAdminTable();
-          showAdminFeedback('Todos os registros locais foram removidos.', 'neutral');
-        });
-      })();
+          await loadCloudRegistrations();
+          showAdminFeedback('Todos os registros na nuvem foram removidos.', 'neutral');
+        } catch (error) {
+          try {
+            handleFirestoreError(error, OperationType.DELETE, 'registrations');
+          } catch (formattedErr) {
+            showAdminFeedback('Erro ao remover registros. Verifique sua permissão de organizador.', 'error');
+          }
+        } finally {
+          btnConfirmClear.disabled = false;
+          btnConfirmClear.textContent = 'Sim, limpar tudo';
+        }
+      });
     </script>
   </body>
 </html>

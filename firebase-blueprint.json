@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "Registration": {
+      "title": "Registration",
+      "description": "Registro de participação de colaborador na simulação de segurança da informação (Quishing).",
+      "type": "object",
+      "properties": {
+        "registro": {
+          "type": "string",
+          "description": "Número de registro do colaborador",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email informado pelo colaborador",
+          "minLength": 5,
+          "maxLength": 254
+        },
+        "fabrica": {
+          "type": "string",
+          "description": "Fábrica selecionada pelo colaborador",
+          "enum": ["Fabrica1", "Fabrica2", "Fabrica4", "Fabrica5", "Fabrica6"]
+        },
+        "dataHora": {
+          "type": "string",
+          "description": "Data e hora local formatada do envio",
+          "minLength": 10,
+          "maxLength": 32
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp do servidor no momento do envio"
+        }
+      },
+      "required": ["registro", "email", "fabrica", "dataHora", "createdAt"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Usuário administrador autorizado a consultar e remover registros da campanha.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 254
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin"]
+        }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/registrations/{registrationId}": {
+      "schema": { "$ref": "#/entities/Registration" },
+      "description": "Coleção principal com os cadastros capturados na simulação de Quishing."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Lista de administradores autorizados além do administrador principal."
+    }
+  }
+}
